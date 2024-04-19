@@ -1,6 +1,7 @@
 from .and_gate import AndGate
 from .not_gate import NotGate
 from .or_gate import OrGate
+from src.types.bits import Bit
 
 
 class DmuxGate:
@@ -9,7 +10,7 @@ class DmuxGate:
         self.not_gate = NotGate()
         self.or_gate = OrGate()
 
-    def __call__(self, a: int, sel: int) -> tuple[int, int]:
+    def __call__(self, a: Bit, sel: Bit) -> tuple[Bit, Bit]:
         """
         Truth table for DMUX gate:
         | A  | SEL | X | Y |

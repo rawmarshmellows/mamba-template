@@ -1,11 +1,12 @@
 from .nand_gate import NandGate
+from src.types.bits import Bit
 
 
 class NotGate:
     def __init__(self):
         self.nand_gate = NandGate()
 
-    def __call__(self, a: int) -> int:
+    def __call__(self, a: Bit) -> Bit:
         """
         Truth table for NOT gate:
         | A | Q |
@@ -14,4 +15,4 @@ class NotGate:
         | 1 | 0 |
         """
 
-        return int(self.nand_gate(a, a))
+        return self.nand_gate(a, a)

@@ -1,5 +1,6 @@
 from .nand_gate import NandGate
 from .not_gate import NotGate
+from src.types.bits import Bit
 
 
 class AndGate:
@@ -7,7 +8,7 @@ class AndGate:
         self.nand_gate = NandGate()
         self.not_gate = NotGate()
 
-    def __call__(self, a: int, b: int) -> int:
+    def __call__(self, a: Bit, b: Bit) -> Bit:
         """
         Truth table for AND gate:
         | A | B | Q |
@@ -17,4 +18,4 @@ class AndGate:
         | 1 | 0 | 0 |
         | 1 | 1 | 1 |
         """
-        return int(self.not_gate(self.nand_gate(a, b)))
+        return self.not_gate(self.nand_gate(a, b))
