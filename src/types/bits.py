@@ -1,38 +1,92 @@
 from typing import Literal
 from dataclasses import dataclass
 from functools import total_ordering
+from abc import ABC, abstractmethod
 
 
 @total_ordering
+class IComparableBit(ABC):
+    value: Literal[0, 1]
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, IComparableBit):
+            return NotImplemented
+        return self.value == other.value
+
+    def __lt__(self, other: "IComparableBit") -> bool:
+        return self.value < other.value
+
+
+class IIterableBit(ABC):
+    def __getitem__(self, key: int):
+        return list(self)[key]
+
+    def __setitem__(self, key: int, value: "Bit"):
+        bits = list(self)
+        assert isinstance(value, Bit)
+        bits[key] = value
+
+    @abstractmethod
+    def __iter__(self):
+        pass
+
+
+class ICreatableBit(ABC):
+    @abstractmethod
+    def from_bits(cls, array_of_bits: list["Bit"]):  # noqa: F821
+        pass
+
+    @abstractmethod
+    def from_string(cls, string: str):
+        pass
+
+
 @dataclass
-class Bit:
+class Bit(IComparableBit, ICreatableBit):
     value: Literal[0, 1]
 
     def __init__(self, value: Literal[0, 1]):
         assert value in [0, 1]
         self.value = value
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Bit):
-            return NotImplemented
-        return self.value == other.value
-
-    def __lt__(self, other: "Bit") -> bool:
-        return self.value < other.value
-
     @classmethod
     def from_string(self, string: str):
         assert string in ["0", "1"]
-        return Bit(int(string))
+        return Bit(int(string[0]))
+
+    @classmethod
+    def from_bits(self, value: list[int]):
+        assert value in [0, 1]
+        return Bit(value)
 
 
 @dataclass
-class Bits2:
+class Bits2(IIterableBit, ICreatableBit, IComparableBit):
     x0: Bit
     x1: Bit
 
     def __iter__(self):
         return iter([self.x0, self.x1])
+
+    @classmethod
+    def from_bits(cls, array_of_bits: list[Bit]):
+        assert len(array_of_bits) == 2
+        return cls(x0=array_of_bits[0], x1=array_of_bits[1])
+
+    @classmethod
+    def from_string(cls, string: str):
+        assert len(string) == 2
+        return cls(x0=Bit.from_string(string[0]), x1=Bit.from_string(string[1]))
+
+
+@dataclass
+class Bits3(IIterableBit, ICreatableBit, IComparableBit):
+    x0: Bit
+    x1: Bit
+    x2: Bit
+
+    def __iter__(self):
+        return iter([self.x0, self.x1, self.x2])
 
     def __getitem__(self, key: int):
         return list(self)[key]
@@ -44,17 +98,21 @@ class Bits2:
 
     @classmethod
     def from_bits(cls, array_of_bits: list[Bit]):
-        assert len(array_of_bits) == 2
-        return cls(x0=array_of_bits[0], x1=array_of_bits[1])
+        assert len(array_of_bits) == 3
+        return cls(x0=array_of_bits[0], x1=array_of_bits[1], x2=array_of_bits[2])
 
     @classmethod
-    def from_string(cls, string: list[str]):
-        assert len(string) == 2
-        return cls(x0=Bit.from_string(string[0]), x1=Bit.from_string(string[1]))
+    def from_string(cls, string: str):
+        assert len(string) == 3
+        return cls(
+            x0=Bit.from_string(string[0]),
+            x1=Bit.from_string(string[1]),
+            x2=Bit.from_string(string[2]),
+        )
 
 
 @dataclass
-class Bits4:
+class Bits4(IIterableBit, ICreatableBit, IComparableBit):
     x0: Bit
     x1: Bit
     x2: Bit
@@ -82,7 +140,7 @@ class Bits4:
         )
 
     @classmethod
-    def from_string(cls, string: list[str]):
+    def from_string(cls, string: str):
         assert len(string) == 4
         return cls(
             x0=Bit.from_string(string[0]),
