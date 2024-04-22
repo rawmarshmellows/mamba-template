@@ -20,6 +20,6 @@ class Mux8Way16Gate:
         h: Bits16,
         sel: Bits3,
     ) -> Bits16:
-        abcd_mux4way16 = self.mux4way16_gate(a, c, e, g, [sel[0], sel[1]])
-        efgh_mux4way16 = self.mux4way16_gate(b, d, f, h, [sel[0], sel[1]])
-        return self.mux16_gate(abcd_mux4way16, efgh_mux4way16, sel[2])
+        aceg_mux4way16 = self.mux4way16_gate(a, c, e, g, [sel[0], sel[1]])
+        bdfh_mux4way16 = self.mux4way16_gate(b, d, f, h, [sel[0], sel[1]])
+        return self.mux16_gate(aceg_mux4way16, bdfh_mux4way16, sel[2])

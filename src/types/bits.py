@@ -5,19 +5,19 @@ from abc import ABC, abstractmethod
 
 
 @total_ordering
-class IComparableBit(ABC):
+class ComparableBit(ABC):
     value: Literal[0, 1]
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, IComparableBit):
+        if not isinstance(other, ComparableBit):
             return NotImplemented
         return self.value == other.value
 
-    def __lt__(self, other: "IComparableBit") -> bool:
+    def __lt__(self, other: "ComparableBit") -> bool:
         return self.value < other.value
 
 
-class IIterableBit(ABC):
+class IterableBit(ABC):
     def __getitem__(self, key: int):
         return list(self)[key]
 
@@ -31,7 +31,7 @@ class IIterableBit(ABC):
         pass
 
 
-class ICreatableBit(ABC):
+class CreatableBit(ABC):
     @abstractmethod
     def from_bits(cls, array_of_bits: list["Bit"]):  # noqa: F821
         pass
@@ -41,13 +41,33 @@ class ICreatableBit(ABC):
         pass
 
 
+class PrintableBit(ABC):
+    def as_string(self) -> str:
+        return "".join([str(bit.value) for bit in self])
+
+
+class AbstractBit(IterableBit, ComparableBit, CreatableBit, PrintableBit):
+    pass
+
+
 @dataclass
-class Bit(IComparableBit, ICreatableBit):
+class Bit(AbstractBit):
     value: Literal[0, 1]
 
     def __init__(self, value: Literal[0, 1]):
         assert value in [0, 1]
         self.value = value
+
+    def __getitem__(self, key: int):
+        return list(self)[key]
+
+    def __setitem__(self, key: int, value: "Bit"):
+        bits = list(self)
+        assert isinstance(value, Bit)
+        bits[key] = value
+
+    def __iter__(self):
+        return iter([self])
 
     @classmethod
     def from_string(self, string: str):
@@ -61,7 +81,7 @@ class Bit(IComparableBit, ICreatableBit):
 
 
 @dataclass
-class Bits2(IIterableBit, ICreatableBit, IComparableBit):
+class Bits2(AbstractBit):
     x0: Bit
     x1: Bit
 
@@ -80,7 +100,7 @@ class Bits2(IIterableBit, ICreatableBit, IComparableBit):
 
 
 @dataclass
-class Bits3(IIterableBit, ICreatableBit, IComparableBit):
+class Bits3(AbstractBit):
     x0: Bit
     x1: Bit
     x2: Bit
@@ -112,7 +132,7 @@ class Bits3(IIterableBit, ICreatableBit, IComparableBit):
 
 
 @dataclass
-class Bits4(IIterableBit, ICreatableBit, IComparableBit):
+class Bits4(AbstractBit):
     x0: Bit
     x1: Bit
     x2: Bit
@@ -151,7 +171,7 @@ class Bits4(IIterableBit, ICreatableBit, IComparableBit):
 
 
 @dataclass
-class Bits8:
+class Bits8(AbstractBit):
     x0: Bit
     x1: Bit
     x2: Bit
@@ -213,7 +233,7 @@ class Bits8:
 
 
 @dataclass
-class Bits16:
+class Bits16(AbstractBit):
     x0: Bit
     x1: Bit
     x2: Bit
