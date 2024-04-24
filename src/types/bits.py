@@ -42,6 +42,9 @@ class CreatableBit(ABC):
 
 
 class PrintableBit(ABC):
+    def __repr__(self) -> str:
+        return self.as_string()
+
     def as_string(self) -> str:
         return "".join([str(bit.value) for bit in self])
 
@@ -50,21 +53,9 @@ class AbstractBit(IterableBit, ComparableBit, CreatableBit, PrintableBit):
     pass
 
 
-@dataclass
+@dataclass(repr=False)
 class Bit(AbstractBit):
     value: Literal[0, 1]
-
-    def __init__(self, value: Literal[0, 1]):
-        assert value in [0, 1]
-        self.value = value
-
-    def __getitem__(self, key: int):
-        return list(self)[key]
-
-    def __setitem__(self, key: int, value: "Bit"):
-        bits = list(self)
-        assert isinstance(value, Bit)
-        bits[key] = value
 
     def __iter__(self):
         return iter([self])
@@ -72,15 +63,16 @@ class Bit(AbstractBit):
     @classmethod
     def from_string(self, string: str):
         assert string in ["0", "1"]
-        return Bit(int(string[0]))
+        return Bit(int(string))
 
     @classmethod
     def from_bits(self, value: list[int]):
         assert value in [0, 1]
-        return Bit(value)
+        assert len(value) == 1
+        return Bit(value[0])
 
 
-@dataclass
+@dataclass(repr=False)
 class Bits2(AbstractBit):
     x0: Bit
     x1: Bit
@@ -99,7 +91,7 @@ class Bits2(AbstractBit):
         return cls(x0=Bit.from_string(string[0]), x1=Bit.from_string(string[1]))
 
 
-@dataclass
+@dataclass(repr=False)
 class Bits3(AbstractBit):
     x0: Bit
     x1: Bit
@@ -107,14 +99,6 @@ class Bits3(AbstractBit):
 
     def __iter__(self):
         return iter([self.x0, self.x1, self.x2])
-
-    def __getitem__(self, key: int):
-        return list(self)[key]
-
-    def __setitem__(self, key: int, value: Bit):
-        bits = list(self)
-        assert isinstance(value, Bit)
-        bits[key] = value
 
     @classmethod
     def from_bits(cls, array_of_bits: list[Bit]):
@@ -131,7 +115,7 @@ class Bits3(AbstractBit):
         )
 
 
-@dataclass
+@dataclass(repr=False)
 class Bits4(AbstractBit):
     x0: Bit
     x1: Bit
@@ -140,14 +124,6 @@ class Bits4(AbstractBit):
 
     def __iter__(self):
         return iter([self.x0, self.x1, self.x2, self.x3])
-
-    def __getitem__(self, key: int):
-        return list(self)[key]
-
-    def __setitem__(self, key: int, value: Bit):
-        bits = list(self)
-        assert isinstance(value, Bit)
-        bits[key] = value
 
     @classmethod
     def from_bits(cls, array_of_bits: list[Bit]):
@@ -170,7 +146,7 @@ class Bits4(AbstractBit):
         )
 
 
-@dataclass
+@dataclass(repr=False)
 class Bits8(AbstractBit):
     x0: Bit
     x1: Bit
@@ -195,14 +171,6 @@ class Bits8(AbstractBit):
             ]
         )
 
-    def __getitem__(self, key: int):
-        return list(self)[key]
-
-    def __setitem__(self, key: int, value: Bit):
-        bits = list(self)
-        assert isinstance(value, Bit)
-        bits[key] = value
-
     @classmethod
     def from_bits(cls, array_of_bits: list[Bit]):
         assert len(array_of_bits) == 8
@@ -218,7 +186,7 @@ class Bits8(AbstractBit):
         )
 
     @classmethod
-    def from_string(cls, string: list[str]):
+    def from_string(cls, string: str):
         assert len(string) == 8
         return cls(
             x0=Bit.from_string(string[0]),
@@ -232,7 +200,7 @@ class Bits8(AbstractBit):
         )
 
 
-@dataclass
+@dataclass(repr=False)
 class Bits16(AbstractBit):
     x0: Bit
     x1: Bit
@@ -273,14 +241,6 @@ class Bits16(AbstractBit):
             ]
         )
 
-    def __getitem__(self, key: int):
-        return list(self)[key]
-
-    def __setitem__(self, key: int, value: Bit):
-        bits = list(self)
-        assert isinstance(value, Bit)
-        bits[key] = value
-
     @classmethod
     def from_bits(cls, array_of_bits: list[Bit]):
         assert len(array_of_bits) == 16
@@ -304,7 +264,7 @@ class Bits16(AbstractBit):
         )
 
     @classmethod
-    def from_string(cls, string: list[str]):
+    def from_string(cls, string: str):
         assert len(string) == 16
         return cls(
             x0=Bit.from_string(string[0]),
