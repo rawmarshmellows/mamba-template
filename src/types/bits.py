@@ -57,19 +57,27 @@ class AbstractBit(IterableBit, ComparableBit, CreatableBit, PrintableBit):
 class Bit(AbstractBit):
     value: Literal[0, 1]
 
+    def __init__(self, value: Literal[0, 1, "0", "1"]):
+        assert value in [
+            0,
+            1,
+            "0",
+            "1",
+        ], f"Invalid value | type(value): {type(value)} | value: {value}"
+        self.value = int(value)
+
     def __iter__(self):
         return iter([self])
 
     @classmethod
     def from_string(self, string: str):
         assert string in ["0", "1"]
-        return Bit(int(string))
+        return Bit(string)
 
     @classmethod
-    def from_bits(self, value: list[int]):
-        assert value in [0, 1]
-        assert len(value) == 1
-        return Bit(value[0])
+    def from_bits(self, array_of_bits: list["Bit"]):
+        assert len(array_of_bits) == 1
+        return Bit(array_of_bits[0])
 
 
 @dataclass(repr=False)

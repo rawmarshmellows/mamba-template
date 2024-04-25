@@ -23,4 +23,6 @@ class NandGate:
             return Bit(1)
         if a == Bit(1) and b == Bit(1):
             return Bit(0)
-        raise ValueError(f"Invalid input a: {a}, b: {b} for NAND gate.")
+        raise ValueError(
+            f"Invalid input a: {a} | type(a): {type(a)}, b: {b} | type(b): {type(b)} for NAND gate."
+        )
