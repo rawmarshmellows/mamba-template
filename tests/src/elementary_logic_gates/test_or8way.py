@@ -1,4 +1,4 @@
-from elementary_logic_gates.or8way_gate import Or8WayGate
+from elementary_logic_gates.or8way_gate import Or8WayGate, or8way_gate
 from src.types.bits import Bits8, Bit
 
 
@@ -19,3 +19,11 @@ def test_or8way_gate():
 
     # Test case 5: Multiple bits are 1
     assert or8way_gate(Bits8.from_string("00100110")) == Bit(1)
+
+
+def test_or8way_gate_function():
+    assert or8way_gate(0, 0, 0, 0, 0, 0, 0, 0) == 0
+    assert or8way_gate(1, 1, 1, 1, 1, 1, 1, 1) == 1
+    assert or8way_gate(0, 0, 0, 0, 1, 0, 0, 0) == 1
+    assert or8way_gate(0, 0, 0, 0, 0, 0, 0, 1) == 1
+    assert or8way_gate(0, 0, 1, 0, 0, 1, 1, 0) == 1

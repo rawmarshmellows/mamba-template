@@ -1,8 +1,15 @@
-from .half_adder_chip import HalfAdderChip
-from src.elementary_logic_gates.or_gate import OrGate
+from .half_adder_chip import HalfAdderChip, half_adder_chip
+from src.elementary_logic_gates.or_gate import OrGate, or_gate
 from src.elementary_logic_gates.xor_gate import XorGate
 from src.elementary_logic_gates.and_gate import AndGate
 from src.types.bits import Bit, Bits2
+from typing import Tuple
+
+
+def full_adder_chip(a: int, b: int, c: int) -> Tuple[int, int]:
+    sum1, carry1 = half_adder_chip(a, b)
+    sum2, carry2 = half_adder_chip(sum1, c)
+    return sum2, or_gate(carry1, carry2)
 
 
 class FullAdderChip:

@@ -1,5 +1,60 @@
-from .mux_gate import MuxGate
+from .mux_gate import MuxGate, mux_gate
 from src.types.bits import Bit, Bits16
+
+
+def mux16_gate(
+    a0: int,
+    a1: int,
+    a2: int,
+    a3: int,
+    a4: int,
+    a5: int,
+    a6: int,
+    a7: int,
+    a8: int,
+    a9: int,
+    a10: int,
+    a11: int,
+    a12: int,
+    a13: int,
+    a14: int,
+    a15: int,
+    b0: int,
+    b1: int,
+    b2: int,
+    b3: int,
+    b4: int,
+    b5: int,
+    b6: int,
+    b7: int,
+    b8: int,
+    b9: int,
+    b10: int,
+    b11: int,
+    b12: int,
+    b13: int,
+    b14: int,
+    b15: int,
+    sel: int,
+):
+    return (
+        mux_gate(a0, b0, sel),
+        mux_gate(a1, b1, sel),
+        mux_gate(a2, b2, sel),
+        mux_gate(a3, b3, sel),
+        mux_gate(a4, b4, sel),
+        mux_gate(a5, b5, sel),
+        mux_gate(a6, b6, sel),
+        mux_gate(a7, b7, sel),
+        mux_gate(a8, b8, sel),
+        mux_gate(a9, b9, sel),
+        mux_gate(a10, b10, sel),
+        mux_gate(a11, b11, sel),
+        mux_gate(a12, b12, sel),
+        mux_gate(a13, b13, sel),
+        mux_gate(a14, b14, sel),
+        mux_gate(a15, b15, sel),
+    )
 
 
 class Mux16Gate:

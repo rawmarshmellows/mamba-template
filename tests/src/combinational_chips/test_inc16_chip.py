@@ -1,5 +1,6 @@
-from combinational_chips.inc16_chip import Inc16Chip
+from combinational_chips.inc16_chip import Inc16Chip, inc16_chip
 from src.types.bits import Bits16
+from src.utils import int_to_bin_tuple
 
 
 def test_inc16_chip():
@@ -19,6 +20,16 @@ def test_inc16_chip():
     ), "Failed for input 1111111111111011"
 
 
-# Example usage of the test function
-if __name__ == "__main__":
-    test_inc16_chip()
+def test_inc16_chip_function():
+    assert inc16_chip(*int_to_bin_tuple(0b0000000000000000)) == int_to_bin_tuple(
+        0b0000000000000001
+    )
+    assert inc16_chip(*int_to_bin_tuple(0b1111111111111111)) == int_to_bin_tuple(
+        0b0000000000000000
+    )
+    assert inc16_chip(*int_to_bin_tuple(0b0000000000000101)) == int_to_bin_tuple(
+        0b0000000000000110
+    )
+    assert inc16_chip(*int_to_bin_tuple(0b1111111111111011)) == int_to_bin_tuple(
+        0b1111111111111100
+    )

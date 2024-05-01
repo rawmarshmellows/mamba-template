@@ -1,5 +1,43 @@
-from .not_gate import NotGate
+from .not_gate import NotGate, not_gate
 from src.types.bits import Bits16
+
+
+def not16_gate(
+    a0: int,
+    a1: int,
+    a2: int,
+    a3: int,
+    a4: int,
+    a5: int,
+    a6: int,
+    a7: int,
+    a8: int,
+    a9: int,
+    a10: int,
+    a11: int,
+    a12: int,
+    a13: int,
+    a14: int,
+    a15: int,
+):
+    return (
+        not_gate(a0),
+        not_gate(a1),
+        not_gate(a2),
+        not_gate(a3),
+        not_gate(a4),
+        not_gate(a5),
+        not_gate(a6),
+        not_gate(a7),
+        not_gate(a8),
+        not_gate(a9),
+        not_gate(a10),
+        not_gate(a11),
+        not_gate(a12),
+        not_gate(a13),
+        not_gate(a14),
+        not_gate(a15),
+    )
 
 
 class Not16Gate:

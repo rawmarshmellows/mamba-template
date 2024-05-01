@@ -155,6 +155,43 @@ class Bits4(AbstractBit):
 
 
 @dataclass(repr=False)
+class Bits6(AbstractBit):
+    x0: Bit
+    x1: Bit
+    x2: Bit
+    x3: Bit
+    x4: Bit
+    x5: Bit
+
+    def __iter__(self):
+        return iter([self.x0, self.x1, self.x2, self.x3, self.x4, self.x5])
+
+    @classmethod
+    def from_bits(cls, array_of_bits: list[Bit]):
+        assert len(array_of_bits) == 6
+        return cls(
+            x0=array_of_bits[0],
+            x1=array_of_bits[1],
+            x2=array_of_bits[2],
+            x3=array_of_bits[3],
+            x4=array_of_bits[4],
+            x5=array_of_bits[5],
+        )
+
+    @classmethod
+    def from_string(cls, string: str):
+        assert len(string) == 6
+        return cls(
+            x0=Bit.from_string(string[0]),
+            x1=Bit.from_string(string[1]),
+            x2=Bit.from_string(string[2]),
+            x3=Bit.from_string(string[3]),
+            x4=Bit.from_string(string[4]),
+            x5=Bit.from_string(string[5]),
+        )
+
+
+@dataclass(repr=False)
 class Bits8(AbstractBit):
     x0: Bit
     x1: Bit

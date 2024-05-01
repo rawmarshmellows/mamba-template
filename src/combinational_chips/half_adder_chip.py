@@ -1,6 +1,13 @@
-from src.elementary_logic_gates.xor_gate import XorGate
-from src.elementary_logic_gates.and_gate import AndGate
+from src.elementary_logic_gates.xor_gate import XorGate, xor_gate
+from src.elementary_logic_gates.and_gate import AndGate, and_gate
 from src.types.bits import Bit, Bits2
+from typing import Tuple
+
+
+def half_adder_chip(a: int, b: int) -> Tuple[int, int]:
+    sum_bit = xor_gate(a, b)
+    carry_bit = and_gate(a, b)
+    return sum_bit, carry_bit
 
 
 class HalfAdderChip:

@@ -1,5 +1,6 @@
-from elementary_logic_gates.dmux8way_gate import Dmux8WayGate
+from elementary_logic_gates.dmux8way_gate import Dmux8WayGate, dmux8way_gate
 from src.types.bits import Bit, Bits3, Bits8
+from src.utils import int_to_bin_tuple
 
 
 def test_dmux8way_gate():
@@ -58,6 +59,55 @@ def test_dmux8way_gate():
     )
 
 
-# Example usage of the test function
-if __name__ == "__main__":
-    test_dmux8way_gate()
+def test_dmux8way_gate_function():
+    # Test cases where the input is 0 (input bit is the most significant bit)
+    assert dmux8way_gate(*int_to_bin_tuple(0b0000, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b0001, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b0010, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b0011, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b0100, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b0101, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b0110, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b0111, bits=4)) == int_to_bin_tuple(
+        0b00000000, bits=8
+    )
+
+    # Test cases where the input is 1
+    assert dmux8way_gate(*int_to_bin_tuple(0b1000, bits=4)) == int_to_bin_tuple(
+        0b10000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b1001, bits=4)) == int_to_bin_tuple(
+        0b01000000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b1010, bits=4)) == int_to_bin_tuple(
+        0b00100000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b1011, bits=4)) == int_to_bin_tuple(
+        0b00010000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b1100, bits=4)) == int_to_bin_tuple(
+        0b00001000, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b1101, bits=4)) == int_to_bin_tuple(
+        0b00000100, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b1110, bits=4)) == int_to_bin_tuple(
+        0b00000010, bits=8
+    )
+    assert dmux8way_gate(*int_to_bin_tuple(0b1111, bits=4)) == int_to_bin_tuple(
+        0b00000001, bits=8
+    )

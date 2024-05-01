@@ -1,6 +1,19 @@
 from src.types.bits import Bit
-from src.elementary_logic_gates.mux_gate import MuxGate
-from .data_flip_flop_chip import DataFlipFlopChip
+from src.elementary_logic_gates.mux_gate import MuxGate, mux_gate
+from .data_flip_flop_chip import DataFlipFlopChip, DataFlipFlopChipPerformance
+
+
+class BitRegisterChipPerformance:
+    def __init__(self):
+        self.data_flip_flop_chip = DataFlipFlopChipPerformance()
+        self.mux_gate = mux_gate
+
+    def __call__(self, in_bit: int, load: int) -> int:
+        previous_data_flip_flop_chip_value = (
+            self.data_flip_flop_chip.current_return_value
+        )
+        mux_output = self.mux_gate(previous_data_flip_flop_chip_value, in_bit, load)
+        return self.data_flip_flop_chip(mux_output)
 
 
 class BitRegisterChip:
@@ -9,6 +22,8 @@ class BitRegisterChip:
         self.mux_gate = MuxGate()
 
     def __call__(self, in_bit: Bit, load: Bit) -> Bit:
-        previous_data_flip_flop_chip_value = self.data_flip_flop_chip(in_bit)
+        previous_data_flip_flop_chip_value = (
+            self.data_flip_flop_chip.current_return_value
+        )
         mux_output = self.mux_gate(previous_data_flip_flop_chip_value, in_bit, load)
         return self.data_flip_flop_chip(mux_output)

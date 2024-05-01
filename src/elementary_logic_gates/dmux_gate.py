@@ -1,7 +1,34 @@
-from .and_gate import AndGate
-from .not_gate import NotGate
+from .and_gate import AndGate, and_gate
+from .not_gate import NotGate, not_gate
 from .or_gate import OrGate
 from src.types.bits import Bit, Bits2
+from typing import Tuple
+
+
+def dmux_gate(a: int, sel: int) -> Tuple[int, int]:
+    # Simplified demultiplexer logic:
+    # This function takes a single input 'a' and a selector 'sel',
+    # directing 'a' to one of two outputs based on the value of 'sel'.
+    # - If 'sel' is 0: The output is (a, 0).
+    # - If 'sel' is 1: The output is (0, a).
+    #
+    # Inputs:
+    #   a: int - input value, binary (0 or 1)
+    #   sel: int - selector, binary (0 or 1)
+    #
+    # The function uses bitwise operations to determine the outputs:
+    #   First output: a AND (NOT sel)
+    #   Second output: a AND sel
+    # These operations are directly computed for efficiency.
+
+    not_sel = 1 - sel  # Compute NOT sel using bitwise subtraction
+    return (a & not_sel), (a & sel)
+
+    # True implementation, but for the sake of performance we will cheat a little
+    not_sel = not_gate(sel)
+    a1sel0x1 = and_gate(a, not_sel)
+    a0sel1y1 = and_gate(a, sel)
+    return a1sel0x1, a0sel1y1
 
 
 class DmuxGate:

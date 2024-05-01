@@ -1,23 +1,28 @@
-from src.sequential_chips.bit_register_chip import BitRegisterChip
+from src.sequential_chips.bit_register_chip import (
+    BitRegisterChip,
+    BitRegisterChipPerformance,
+)
 from src.types.bits import Bit
 from pathlib import Path
 
 
-def test_data_flip_flop_chip():
+def test_bit_register_chip():
     bit_register_chip = BitRegisterChip()
-    with (Path(__file__).parent / "bit_register_compare.txt").open("r") as file:
-        # Skip the first line
+    with (Path(__file__).parent / "test_bit_register_chip_compare.txt").open(
+        "r"
+    ) as file:
         for line in file.read().split("\n")[1:]:
             _, time, in_bit, load, expected_out, _ = line.replace(" ", "").split("|")
-            if "+" not in time:
-                continue
+            out = bit_register_chip(Bit(in_bit), Bit(load))
+            assert out == Bit(expected_out)
 
-            in_bit = Bit(in_bit)
-            load = Bit(load)
-            expected_out = Bit(expected_out)
 
-            print(f"{time} | {in_bit} | {load} | {expected_out}")
-
-            out = bit_register_chip(in_bit, load)
-
-            print(f"{time} | {in_bit} | {load} | {expected_out} | {out}")
+def test_bit_register_chip_int():
+    bit_register_chip = BitRegisterChipPerformance()
+    with (Path(__file__).parent / "test_bit_register_chip_compare.txt").open(
+        "r"
+    ) as file:
+        for line in file.read().split("\n")[1:]:
+            _, time, in_bit, load, expected_out, _ = line.replace(" ", "").split("|")
+            out = bit_register_chip(int(in_bit), int(load))
+            assert out == int(expected_out)

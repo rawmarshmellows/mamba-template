@@ -1,4 +1,4 @@
-from combinational_chips.full_adder_chip import FullAdderChip
+from combinational_chips.full_adder_chip import FullAdderChip, full_adder_chip
 from src.types.bits import Bit
 
 
@@ -52,3 +52,14 @@ def test_full_adder_chip():
     assert sum == Bit(1) and carry == Bit(
         1
     ), "Failed test case with a = 1, b = 1, c = 1"
+
+
+def test_full_adder_chip_function():
+    assert full_adder_chip(0, 0, 0) == (0, 0)
+    assert full_adder_chip(0, 0, 1) == (1, 0)
+    assert full_adder_chip(0, 1, 0) == (1, 0)
+    assert full_adder_chip(0, 1, 1) == (0, 1)
+    assert full_adder_chip(1, 0, 0) == (1, 0)
+    assert full_adder_chip(1, 0, 1) == (0, 1)
+    assert full_adder_chip(1, 1, 0) == (0, 1)
+    assert full_adder_chip(1, 1, 1) == (1, 1)

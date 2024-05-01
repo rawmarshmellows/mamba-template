@@ -1,6 +1,13 @@
-from .nand_gate import NandGate
-from .not_gate import NotGate
+from .nand_gate import NandGate, nand_gate
+from .not_gate import NotGate, not_gate
 from src.types.bits import Bit
+
+
+def and_gate(a: int, b: int) -> int:
+    return int(a and b)
+
+    # True implementation, but for the sake of performance we will cheat a little
+    return not_gate(nand_gate(a, b))
 
 
 class AndGate:

@@ -1,5 +1,6 @@
-from elementary_logic_gates.mux8way16_gate import Mux8Way16Gate
+from elementary_logic_gates.mux8way16_gate import Mux8Way16Gate, mux8way16_gate
 from src.types.bits import Bits16, Bits3
+from src.utils import int_to_bin_tuple
 
 
 def test_mux8way16_gate():
@@ -74,3 +75,65 @@ def test_mux8way16_gate():
     assert mux8way16_gate(a, b, c, d, e, f, g, h, Bits3.from_string("101")) == f
     assert mux8way16_gate(a, b, c, d, e, f, g, h, Bits3.from_string("110")) == g
     assert mux8way16_gate(a, b, c, d, e, f, g, h, Bits3.from_string("111")) == h
+
+
+def test_dmux8way_gate_function():
+    # Test where all inputs are zero
+    zeros_tuple = int_to_bin_tuple(
+        0b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+        bits=128,
+    )
+    assert mux8way16_gate(
+        *zeros_tuple, *int_to_bin_tuple(0b000, bits=3)
+    ) == int_to_bin_tuple(0b0000000000000000)
+    assert mux8way16_gate(
+        *zeros_tuple, *(int_to_bin_tuple(0b001, bits=3))
+    ) == int_to_bin_tuple(0b0000000000000000, bits=16)
+    assert mux8way16_gate(
+        *zeros_tuple, *int_to_bin_tuple(0b010, bits=3)
+    ) == int_to_bin_tuple(0b0000000000000000, bits=16)
+    assert mux8way16_gate(
+        *zeros_tuple, *(int_to_bin_tuple(0b011, bits=3))
+    ) == int_to_bin_tuple(0b0000000000000000, bits=16)
+    assert mux8way16_gate(
+        *zeros_tuple, *(int_to_bin_tuple(0b100, bits=3))
+    ) == int_to_bin_tuple(0b0000000000000000, bits=16)
+    assert mux8way16_gate(
+        *zeros_tuple, *(int_to_bin_tuple(0b101, bits=3))
+    ) == int_to_bin_tuple(0b0000000000000000, bits=16)
+    assert mux8way16_gate(
+        *zeros_tuple, *(int_to_bin_tuple(0b110, bits=3))
+    ) == int_to_bin_tuple(0b0000000000000000, bits=16)
+    assert mux8way16_gate(
+        *zeros_tuple, *(int_to_bin_tuple(0b111, bits=3))
+    ) == int_to_bin_tuple(0b0000000000000000, bits=16)
+
+    # Test with specific non-zero values
+    values_tuple = int_to_bin_tuple(
+        0b00010010001101000010001101000101001101000101011001000101011001110101011001111000011001111000100101111000100110101000100110101011,
+        bits=128,
+    )
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b000, bits=3))
+    ) == int_to_bin_tuple(0b0001001000110100, bits=16)
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b001, bits=3))
+    ) == int_to_bin_tuple(0b0010001101000101, bits=16)
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b010, bits=3))
+    ) == int_to_bin_tuple(0b0011010001010110, bits=16)
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b011, bits=3))
+    ) == int_to_bin_tuple(0b0100010101100111, bits=16)
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b100, bits=3))
+    ) == int_to_bin_tuple(0b0101011001111000, bits=16)
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b101, bits=3))
+    ) == int_to_bin_tuple(0b0110011110001001, bits=16)
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b110, bits=3))
+    ) == int_to_bin_tuple(0b0111100010011010, bits=16)
+    assert mux8way16_gate(
+        *values_tuple, *(int_to_bin_tuple(0b111, bits=3))
+    ) == int_to_bin_tuple(0b1000100110101011, bits=16)
