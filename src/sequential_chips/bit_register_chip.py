@@ -8,10 +8,12 @@ class BitRegisterChipPerformance:
         self.data_flip_flop_chip = DataFlipFlopChipPerformance()
         self.mux_gate = mux_gate
 
+    @property
+    def current_value(self):
+        return self.data_flip_flop_chip.current_value
+
     def __call__(self, in_bit: int, load: int) -> int:
-        previous_data_flip_flop_chip_value = (
-            self.data_flip_flop_chip.current_return_value
-        )
+        previous_data_flip_flop_chip_value = self.current_value
         mux_output = self.mux_gate(previous_data_flip_flop_chip_value, in_bit, load)
         return self.data_flip_flop_chip(mux_output)
 
@@ -21,9 +23,11 @@ class BitRegisterChip:
         self.data_flip_flop_chip = DataFlipFlopChip()
         self.mux_gate = MuxGate()
 
+    @property
+    def current_value(self):
+        return self.data_flip_flop_chip.current_value
+
     def __call__(self, in_bit: Bit, load: Bit) -> Bit:
-        previous_data_flip_flop_chip_value = (
-            self.data_flip_flop_chip.current_return_value
-        )
+        previous_data_flip_flop_chip_value = self.current_value
         mux_output = self.mux_gate(previous_data_flip_flop_chip_value, in_bit, load)
         return self.data_flip_flop_chip(mux_output)

@@ -22,6 +22,27 @@ class RegisterChipPerformance:
         self.bit_register_chip_14 = BitRegisterChipPerformance()
         self.bit_register_chip_15 = BitRegisterChipPerformance()
 
+    @property
+    def current_value(self):
+        return (
+            self.bit_register_chip_0.current_value,
+            self.bit_register_chip_1.current_value,
+            self.bit_register_chip_2.current_value,
+            self.bit_register_chip_3.current_value,
+            self.bit_register_chip_4.current_value,
+            self.bit_register_chip_5.current_value,
+            self.bit_register_chip_6.current_value,
+            self.bit_register_chip_7.current_value,
+            self.bit_register_chip_8.current_value,
+            self.bit_register_chip_9.current_value,
+            self.bit_register_chip_10.current_value,
+            self.bit_register_chip_11.current_value,
+            self.bit_register_chip_12.current_value,
+            self.bit_register_chip_13.current_value,
+            self.bit_register_chip_14.current_value,
+            self.bit_register_chip_15.current_value,
+        )
+
     def __call__(
         self,
         a0: int,
@@ -82,6 +103,29 @@ class RegisterChip:
         self.bit_register_chip_13 = BitRegisterChip()
         self.bit_register_chip_14 = BitRegisterChip()
         self.bit_register_chip_15 = BitRegisterChip()
+
+    @property
+    def current_value(self):
+        return Bits16.from_bits(
+            [
+                self.bit_register_chip_0.current_value,
+                self.bit_register_chip_1.current_value,
+                self.bit_register_chip_2.current_value,
+                self.bit_register_chip_3.current_value,
+                self.bit_register_chip_4.current_value,
+                self.bit_register_chip_5.current_value,
+                self.bit_register_chip_6.current_value,
+                self.bit_register_chip_7.current_value,
+                self.bit_register_chip_8.current_value,
+                self.bit_register_chip_9.current_value,
+                self.bit_register_chip_10.current_value,
+                self.bit_register_chip_11.current_value,
+                self.bit_register_chip_12.current_value,
+                self.bit_register_chip_13.current_value,
+                self.bit_register_chip_14.current_value,
+                self.bit_register_chip_15.current_value,
+            ]
+        )
 
     def __call__(self, in_bits: Bits16, load: Bit) -> Bits16:
         return Bits16.from_bits(
