@@ -1,4 +1,4 @@
-from src.utils import int_to_twos
+from src.hardware.utils import int_to_twos
 
 
 def test_int_to_twos():

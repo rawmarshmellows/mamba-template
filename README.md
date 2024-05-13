@@ -62,7 +62,7 @@ PYTHONPATH=src/:. python -m cProfile -s tottime tests/performance/ram64_chip_per
 ```
 
 ```
-PYTHONPATH=src/:. python -m cProfile -s tottime tests/performance/ram64_chip_int_performance_test.py
+PYTHONPATH=src/:. python -m cProfile -s tottime tests/performance/ram64_chip_performance_performance_test.py
 
          10543687 function calls (10543410 primitive calls) in 4.359 seconds
 
@@ -85,5 +85,5 @@ PYTHONPATH=src/:. python -m cProfile -s tottime tests/performance/ram64_chip_int
       319    0.004    0.000    4.325    0.014 ram64_chip.py:20(__call__)
       957    0.004    0.000    0.006    0.000 utils.py:7(int_to_bin_tuple)
        23    0.003    0.000    0.003    0.000 {method 'read' of '_io.BufferedReader' objects}
-        1    0.003    0.003    4.336    4.336 ram64_chip_int_performance_test.py:6(test_ram64_chip_int)
+        1    0.003    0.003    4.336    4.336 ram64_chip_performance_performance_test.py:6(test_ram64_chip_performance)
 ```
