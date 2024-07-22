@@ -1,0 +1,15 @@
+name: your-env-name
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip:
+      - pytest
+      - pytest-watch
+      - black
+      - ruff
+      - isort
+      - jupyterlab_code_formatter
+      - jupyterlab
+      - jupyterlab-vim
+      - mypy
