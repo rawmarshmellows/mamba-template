@@ -15,6 +15,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"mhutchie.git-graph",
 				"charliermarsh.ruff"
 			]
 		}
